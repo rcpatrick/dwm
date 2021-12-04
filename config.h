@@ -2,7 +2,7 @@
 
 /* appearance */
 static const unsigned int borderpx  = 3;        /* border pixel of windows */
-static const unsigned int gappx     = 10;        /* gaps between windows */
+static const unsigned int gappx     = 10;       /* gaps between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
@@ -13,10 +13,19 @@ static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
 static const char col_gray4[]       = "#eeeeee";
 static const char col_cyan[]        = "#005577";
+/* solarized colors */
+static const char col_sol_red[]     = "#dc322f";
+static const char col_sol_orange[]  = "#cb4b16";
+static const char col_sol_yellow[]  = "#b58900";
+static const char col_sol_green[]   = "#859900";
+static const char col_sol_blue[]    = "#268bd2";
+static const char col_sol_cyan[]    = "#2aa198";
+static const char col_sol_violet[]  = "#6c71c4";
+static const char col_sol_magenta[] = "#d33682";
 static const char *colors[][3]      = {
-	/*               fg         bg         border   */
-	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
-	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
+	/*               fg         bg            border   */
+	[SchemeNorm] = { col_gray3, col_gray1,    col_gray2 },
+	[SchemeSel]  = { col_gray4, col_sol_cyan, col_sol_orange },
 };
 
 /* tagging */
@@ -65,7 +74,6 @@ static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
-	{ MODKEY,                       XK_b,      spawn,          SHCMD("$BROWSER") },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
 	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
@@ -73,11 +81,10 @@ static Key keys[] = {
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
 	{ MODKEY|ShiftMask,             XK_Return, zoom,           {0} },
-	{ MODKEY,                       XK_Tab,    view,           {0} },
+	/*{ MODKEY,                       XK_Tab,    view,           {0} },*/
 	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
-	{ MODKEY|ShiftMask,             XK_f,      spawn,          SHCMD("st lf") },
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
@@ -90,19 +97,38 @@ static Key keys[] = {
 	{ MODKEY,                       XK_minus,  setgaps,        {.i = -1 } },
 	{ MODKEY,                       XK_equal,  setgaps,        {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_equal,  setgaps,        {.i = 0  } },
-	{ MODKEY|ShiftMask,             XK_d,      spawn,          SHCMD("exec $HOME/.local/bin/scripts/desktopbg.sh") },
-	{ MODKEY|ShiftMask,             XK_w,      spawn,          SHCMD("st $HOME/.local/bin/scripts/weather.sh") },
+	/* My custom bindings */
+        { MODKEY,                       XK_b,      spawn,          SHCMD("$BROWSER") },
+        { MODKEY|ShiftMask,             XK_f,      spawn,          SHCMD("st lf") },
+	{ MODKEY|ShiftMask,             XK_d,      spawn,          SHCMD("exec ~/.local/bin/scripts/desktopbg.sh") },
+	{ MODKEY|ShiftMask,             XK_w,      spawn,          SHCMD("st ~/.local/bin/scripts/weather.sh") },
+	{ MODKEY,                       XK_w,      spawn,          SHCMD("exec radar $(cat ~/.local/bin/scripts/radar.txt)") },
+	{ MODKEY|ShiftMask,             XK_l,      spawn,          SHCMD("exec ~/.local/bin/scripts/changelocation.sh") },
 	{ MODKEY|ShiftMask,             XK_a,      spawn,          SHCMD("st newsboat") },
-	{ MODKEY|ShiftMask,             XK_z,      spawn,          SHCMD("st mutt") },
+	{ MODKEY|ShiftMask,             XK_z,      spawn,          SHCMD("st ~/.local/bin/scripts/startmutt.sh") },
 	{ MODKEY|ShiftMask,             XK_m,      spawn,          SHCMD("st ncmpcpp") },
+	{ MODKEY|ShiftMask,             XK_j,      spawn,          SHCMD("exec ~/.local/bin/scripts/dmenuunicode.sh") },
+	{ MODKEY|ShiftMask,             XK_u,      spawn,          SHCMD("st lf /media/usb/") },
+	{ MODKEY|ShiftMask,             XK_i,      spawn,          SHCMD("st lf /mnt/win/Users/Ray/") },
+	{ MODKEY|ShiftMask,             XK_b,      spawn,          SHCMD("st lf ~/doc/lib/") },
+        { 0,               XF86XK_Calculator,      spawn,          SHCMD("st bc -lq") },
+	{ 0,                     XF86XK_Mail,      spawn,          SHCMD("st ~/.local/bin/scripts/startmutt.sh") },
+	{ 0,                XF86XK_Favorites,      spawn,          SHCMD("st ~/.local/bin/scripts/dictionary.sh") },
+	{ 0|ShiftMask,      XF86XK_Favorites,      spawn,          SHCMD("st ~/.local/bin/scripts/bible.sh") },
 
-	{ MODKEY|ShiftMask,             XK_F5,     spawn,          SHCMD("st $HOME/.local/bin/scripts/clearcache.sh") },
+	{ MODKEY|ShiftMask,             XK_F5,     spawn,          SHCMD("st ~/.local/bin/scripts/clearcache.sh") },
 
-	{ 0, XF86XK_AudioMute,           spawn,     SHCMD("amixer -q sset Master toggle") },
-	{ 0, XF86XK_AudioRaiseVolume,    spawn,     SHCMD("amixer -q sset Master 5%+") },
-	{ 0, XF86XK_AudioLowerVolume,    spawn,     SHCMD("amixer -q sset Master 5%-") },
-	{ 0, XF86XK_Calculator,          spawn,     SHCMD("st bc -l") },
+	/* Volume controls */
+	{ 0, XF86XK_AudioMute,           spawn,     SHCMD("amixer -q sset Master toggle && kill -44 $(pidof dwmblocks)") },
+	{ 0, XF86XK_AudioRaiseVolume,    spawn,     SHCMD("amixer -q sset Master 5%+ && kill -44 $(pidof dwmblocks)") },
+	{ 0, XF86XK_AudioLowerVolume,    spawn,     SHCMD("amixer -q sset Master 5%- && kill -44 $(pidof dwmblocks)") },
+	{ 0, XF86XK_MonBrightnessDown,   spawn,     SHCMD("xbacklight -dec 10") },
+	{ 0, XF86XK_MonBrightnessUp,     spawn,     SHCMD("xbacklight -inc 10") },
 
+	/* Screenshot */
+	{ 0, 		XK_Print,	spawn,	SHCMD("~/.local/bin/scripts/screenshot.sh") },
+	{ 0|ShiftMask,	XK_Print,	spawn,	SHCMD("~/.local/bin/scripts/screenshot.sh s") },
+	
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
