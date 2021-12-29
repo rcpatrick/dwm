@@ -102,7 +102,7 @@ static Key keys[] = {
         { MODKEY|ShiftMask,             XK_f,      spawn,          SHCMD("st lf") },
 	{ MODKEY|ShiftMask,             XK_d,      spawn,          SHCMD("exec ~/.local/bin/scripts/desktopbg.sh") },
 	{ MODKEY|ShiftMask,             XK_w,      spawn,          SHCMD("st ~/.local/bin/scripts/weather.sh") },
-	{ MODKEY,                       XK_w,      spawn,          SHCMD("exec radar $(cat ~/.local/bin/scripts/radar.txt)") },
+	{ MODKEY,                       XK_w,      spawn,          SHCMD("exec ~/.local/bin/scripts/wximagery.sh)") },
 	{ MODKEY|ShiftMask,             XK_l,      spawn,          SHCMD("exec ~/.local/bin/scripts/changelocation.sh") },
 	{ MODKEY|ShiftMask,             XK_a,      spawn,          SHCMD("st newsboat") },
 	{ MODKEY|ShiftMask,             XK_z,      spawn,          SHCMD("st ~/.local/bin/scripts/startmutt.sh") },
